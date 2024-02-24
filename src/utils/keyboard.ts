@@ -24,6 +24,20 @@ export const matchesKeyboard = () => {
   ])
 }
 
+export const additionalMatchesKeyboard = () => {
+  return Markup.inlineKeyboard([
+    [
+      Markup.button.callback('Премьер Лига', 'match-PL', false),
+      Markup.button.callback('Лига чемпионов', 'match-CL', false),
+      Markup.button.callback('БундесЛига', 'match-BL1', false),
+    ],
+    [
+      Markup.button.callback('Изменить дату', 'action-RESTART', false),
+      Markup.button.callback('Меню', 'action-MENU', false),
+    ],
+  ])
+}
+
 export const backKeyboard = Markup.keyboard([['Назад']])
 
 export const resultKeyboard = (books: ISearchResult[], pagination: Pagination) => {
