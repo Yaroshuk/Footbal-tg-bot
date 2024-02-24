@@ -1,4 +1,5 @@
 import { Context, Scenes } from 'telegraf'
+import { DateTime } from 'luxon'
 import { matchesKeyboard } from '../utils/keyboard'
 import { IMyContext } from '../types'
 import { getMatches } from '../services/matches'
@@ -26,16 +27,15 @@ matches.action(/match/, async (ctx) => {
     }
 
     ;[...result].forEach(async (match) => {
-      await ctx.replyWithMarkdown(`#${match.homeTeam.shortName} VS #${match.awayTeam.shortName}`)
+      console.log('mat', match)
+
+      await ctx.replyWithHTML(`
+      ${match?.date ? `⏳ ${DateTime.fromISO(match?.date).toFormat('T dd-LL-yyyy\n\n')}` : ''}🏚 <b>${
+        match.homeTeam.shortName
+      } (${match.homeTeam.tla})</b>
+      \n🆚     \n\n🚌 <b>${match.awayTeam.shortName} (${match.awayTeam.tla})</b>\n\n`)
     })
   }
-
-  // if (data) {
-  //   const book = await flibusta.getBook(data.split('-')[1])
-  //   if (book) {
-  //     ctx.session.book = book
-  //   }
-  // }
 })
 
 export default matches
