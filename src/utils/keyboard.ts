@@ -1,11 +1,7 @@
 import { Markup } from 'telegraf'
 import { ISearchResult, Pagination } from '../types'
 
-export const mainKeyboard = Markup.keyboard([
-  ['Расписание матчей', 'Лайв результаты', 'Результаты'],
-  ['Турнирные таблицы', 'Подписка', 'Предложение/реклама'],
-  ['Сделать ставку'],
-])
+export const mainKeyboard = Markup.keyboard([['Расписание матчей', 'Лайв матчи'], ['Сделать ставку']]).oneTime(true)
 
 // export const matchesKeyboard = Markup.keyboard([['Премьер Лига', 'Лига Чемпионов', 'Бундеслига'], ['На главную']])
 

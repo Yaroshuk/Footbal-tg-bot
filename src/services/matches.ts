@@ -3,21 +3,24 @@ import { BASE_URL } from '../constants/api'
 import { DateTime } from 'luxon'
 import { parseMatchesResults } from '../parsers'
 
-export const getMatches = async (league: string) => {
+export const getMatches = async (league: string, status?: string) => {
   if (!league) {
     console.log('ERROR')
   }
 
-  const date = DateTime.now().toFormat('yyyy-LL-dd')
-  const dateTo = DateTime.now().plus({ days: 2 }).toFormat('yyyy-LL-dd')
+  const params: any = {
+    dateFrom: DateTime.now().toFormat('yyyy-LL-dd'),
+    dateTo: DateTime.now().plus({ days: 2 }).toFormat('yyyy-LL-dd'),
+  }
 
-  console.log('лига', league)
+  if (status) {
+    params.status = status
+  }
 
   try {
     const response = await axios(`${BASE_URL}competitions/${league}/matches`, {
       params: {
-        dateFrom: date,
-        dateTo: dateTo,
+        ...params,
       },
       headers: {
         'X-Auth-Token': '2bacd871e62d42b39e82bf8cf810cdf6',
@@ -25,7 +28,6 @@ export const getMatches = async (league: string) => {
     })
 
     if (response.status === 200) {
-      console.log('RESULT', response)
       const result = parseMatchesResults(response.data)
       return result
     }
