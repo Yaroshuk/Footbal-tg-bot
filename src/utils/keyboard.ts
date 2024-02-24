@@ -5,6 +5,15 @@ export const mainKeyboard = Markup.keyboard([['Расписание матчей
 
 // export const matchesKeyboard = Markup.keyboard([['Премьер Лига', 'Лига Чемпионов', 'Бундеслига'], ['На главную']])
 
+export const dateKeyboard = () => {
+  return Markup.inlineKeyboard([
+    [
+      Markup.button.callback('На сегодня', 'date-TODAY', false),
+      Markup.button.callback('На завтра', 'date-TOMORROW', false),
+    ],
+  ])
+}
+
 export const matchesKeyboard = () => {
   return Markup.inlineKeyboard([
     [

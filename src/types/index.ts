@@ -24,8 +24,7 @@ export interface IBook {
 }
 
 export interface ISession extends Scenes.SceneSession {
-  searchResalt?: ISearchResults
-  book?: IBook
+  isTomorrow?: boolean
 }
 
 export interface IMyContext extends Context {
