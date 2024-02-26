@@ -37,5 +37,9 @@
     "lint-fix": "npx prettier --config .prettierrc.json --write src/"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "18.16.0",
+    "npm": "8.4.1"
+  }
 }
