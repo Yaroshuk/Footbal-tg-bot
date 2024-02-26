@@ -3,6 +3,23 @@ import 'dotenv/config'
 import { Telegraf, Scenes, session, Markup } from 'telegraf'
 import { start, matches, live } from './scenes'
 import { IMyContext } from './types'
+import mongoose from 'mongoose'
+
+mongoose.set('strictQuery', false)
+
+mongoose.connect(process.env.MONGO_URL!, {})
+
+mongoose.connection.on('error', (err) => {
+  console.log('DB connection error', err)
+
+  process.exit(1)
+})
+
+mongoose.connection.on('open', () => {
+  console.log('DB connected')
+
+  main()
+})
 
 function main() {
   const bot = new Telegraf<IMyContext>(process.env.TM_TOKEN!)
@@ -19,12 +36,10 @@ function main() {
 
   bot.hears('Сделать ставку', (ctx) =>
     ctx.reply(
-      'Делай ставки на лучше лицензионно букмекере:',
+      'Делай ставки на лучшем лицензионно букмекере:',
       Markup.inlineKeyboard([[Markup.button.url('Сделать ставку', 'https://www.pari.ru/', false)]])
     )
   )
 
   bot.launch()
 }
-
-main()

@@ -32,7 +32,7 @@ export const getMatches = async (league: string, isTomorrow: boolean = false, st
         ...params,
       },
       headers: {
-        'X-Auth-Token': '2bacd871e62d42b39e82bf8cf810cdf6',
+        'X-Auth-Token': process.env.API_TOKEN!,
       },
     })
 
