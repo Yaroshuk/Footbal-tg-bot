@@ -41,5 +41,14 @@ function main() {
     )
   )
 
+  bot.catch((error: any) => {
+    console.log('GLOBAL ERROR', error)
+  })
+
+  // bot.on('text', async (ctx) => {
+  //   ctx.reply('Используй меню чтобы управлять ботом')
+  //   ctx.scene.enter('Start')
+  // })
+
   bot.launch()
 }

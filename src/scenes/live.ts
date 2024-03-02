@@ -19,7 +19,7 @@ live.action(/match/, async (ctx) => {
   if (league) {
     ctx.reply(`Смотрим матчи для лиги - ${league}`)
 
-    const result = await getMatches(league, false, 'LIVE')
+    const result = await getMatches(league, 'TODAY', 'LIVE')
 
     if (!result || !result?.length) {
       ctx.reply('Упс, ничего не нашлось')

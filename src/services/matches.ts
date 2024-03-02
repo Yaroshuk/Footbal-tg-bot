@@ -3,23 +3,30 @@ import { BASE_URL } from '../constants/api'
 import { DateTime } from 'luxon'
 import { parseMatchesResults } from '../parsers'
 
-export const getMatches = async (league: string, isTomorrow: boolean = false, status?: string) => {
+export const getMatches = async (league: string, date: string = 'TODAY', status?: string) => {
   if (!league) {
     console.log('ERROR')
   }
 
-  const date = DateTime.now().toFormat('yyyy-LL-dd')
+  const today = DateTime.now().toFormat('yyyy-LL-dd')
 
   const params: any = {
-    dateFrom: date,
-    dateTo: date,
+    dateFrom: today,
+    dateTo: today,
   }
 
-  if (isTomorrow) {
+  if (date === 'TOMORROW') {
     const tomorrowDate = DateTime.now().plus({ days: 1 }).toFormat('yyyy-LL-dd')
 
     params.dateFrom = tomorrowDate
     params.dateTo = tomorrowDate
+  }
+
+  if (date === 'WEEK') {
+    const weekDate = DateTime.now().plus({ days: 7 }).toFormat('yyyy-LL-dd')
+
+    params.dateFrom = today
+    params.dateTo = weekDate
   }
 
   if (status) {

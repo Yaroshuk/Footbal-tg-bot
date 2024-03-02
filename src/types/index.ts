@@ -25,6 +25,7 @@ export interface IBook {
 
 export interface ISession extends Scenes.SceneSession {
   isTomorrow?: boolean
+  date?: string
 }
 
 export interface IMyContext extends Context {

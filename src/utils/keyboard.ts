@@ -1,31 +1,34 @@
 import { Markup } from 'telegraf'
 import { ISearchResult, Pagination } from '../types'
 
-export const mainKeyboard = Markup.keyboard([['Расписание матчей', 'Лайв матчи'], ['Сделать ставку']]).oneTime(true)
+export const mainKeyboard = Markup.keyboard([['Расписание матчей', 'Лайв матчи'], ['Сделать ставку']])
+  .resize()
+  .oneTime(true)
 
 // export const matchesKeyboard = Markup.keyboard([['Премьер Лига', 'Лига Чемпионов', 'Бундеслига'], ['На главную']])
 
 export const dateKeyboard = () => {
-  return Markup.inlineKeyboard([
+  return Markup.keyboard([
     [
       Markup.button.callback('На сегодня', 'date-TODAY', false),
       Markup.button.callback('На завтра', 'date-TOMORROW', false),
+      Markup.button.callback('На неделю', 'date-WEEK', false),
     ],
-  ])
+  ]).resize()
 }
 
 export const matchesKeyboard = () => {
-  return Markup.inlineKeyboard([
+  return Markup.keyboard([
     [
       Markup.button.callback('Премьер Лига', 'match-PL', false),
       Markup.button.callback('Лига чемпионов', 'match-CL', false),
       Markup.button.callback('БундесЛига', 'match-BL1', false),
     ],
-  ])
+  ]).resize()
 }
 
 export const additionalMatchesKeyboard = () => {
-  return Markup.inlineKeyboard([
+  return Markup.keyboard([
     [
       Markup.button.callback('Премьер Лига', 'match-PL', false),
       Markup.button.callback('Лига чемпионов', 'match-CL', false),
@@ -35,7 +38,7 @@ export const additionalMatchesKeyboard = () => {
       Markup.button.callback('Изменить дату', 'action-RESTART', false),
       Markup.button.callback('Меню', 'action-MENU', false),
     ],
-  ])
+  ]).resize()
 }
 
 export const backKeyboard = Markup.keyboard([['Назад']])
