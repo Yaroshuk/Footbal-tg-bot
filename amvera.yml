@@ -1,0 +1,16 @@
+---
+meta:
+  environment: node
+  toolchain:
+    name: npm
+    version: 14.20
+build:
+  skip: false
+  artifacts:
+    '*': /
+  additionalCommands: npm run build
+run:
+  scriptName: dist/index.js
+  persistenceMount: /data
+  containerPort: 80
+  command: node dist/index.js
