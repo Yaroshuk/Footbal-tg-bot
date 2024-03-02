@@ -45,11 +45,24 @@ matches.hears(['Премьер Лига', 'Лига чемпионов', 'Бун
   const matches = [...result]
 
   for (const match of matches) {
-    await ctx.replyWithHTML(`
-      ${match?.date ? `⏳ ${DateTime.fromISO(match?.date).toFormat('T dd-LL-yyyy\n\n')}` : ''}🏚 <b>${
-      match.homeTeam.shortName
-    } (${match.homeTeam.tla})</b>
-      \n🆚     \n\n🚌 <b>${match.awayTeam.shortName} (${match.awayTeam.tla})</b>\n\n`)
+    console.log('MATCG', match)
+    const caption = `<b>${match.homeTeam.shortName} (дома)</b>   🆚   <b>${
+      match.awayTeam.shortName
+    } (в гостях)</b>\n\n${match?.date ? `⏳ ${DateTime.fromISO(match?.date).toFormat('T dd-LL-yyyy\n\n')}` : ''}`
+
+    try {
+      await ctx.replyWithMediaGroup([
+        {
+          type: 'photo',
+          media: String(match.homeTeam.crest).replace('.svg', '.png'),
+          parse_mode: 'HTML',
+          caption,
+        },
+        { type: 'photo', media: String(match.awayTeam.crest).replace('.svg', '.png') },
+      ])
+    } catch (error) {
+      console.log('SVG error', error)
+    }
   }
 
   await ctx.reply(
