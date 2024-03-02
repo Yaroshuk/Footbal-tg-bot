@@ -4,6 +4,7 @@ import { Telegraf, Scenes, session, Markup } from 'telegraf'
 import { start, matches, live } from './scenes'
 import { IMyContext } from './types'
 import mongoose from 'mongoose'
+import { steps } from './middlewares'
 
 mongoose.set('strictQuery', false)
 
@@ -28,8 +29,29 @@ function main() {
 
   bot.use(session())
   bot.use(stage.middleware())
+  bot.use(steps)
 
   bot.start((ctx) => ctx.scene.enter('Start'))
+  bot.command('back', async (ctx) => {
+    const steps = ctx.session.steps
+
+    if (!steps?.length) {
+      await ctx.reply('Дальше нельзя')
+
+      // eslint-disable-next-line no-useless-return
+      return
+    }
+
+    const step = steps.slice(-1)[0]
+
+    ctx.session.steps = ctx.session.steps?.slice(0, -1)
+    if (step.scene) {
+      ctx.scene.enter(step.scene)
+      return
+    }
+
+    ctx.scene.leave()
+  })
 
   bot.hears('Расписание матчей', (ctx) => ctx.scene.enter('Matches'))
   bot.hears('Лайв матчи', (ctx) => ctx.scene.enter('Live'))
@@ -44,11 +66,6 @@ function main() {
   bot.catch((error: any) => {
     console.log('GLOBAL ERROR', error)
   })
-
-  // bot.on('text', async (ctx) => {
-  //   ctx.reply('Используй меню чтобы управлять ботом')
-  //   ctx.scene.enter('Start')
-  // })
 
   bot.launch()
 }
