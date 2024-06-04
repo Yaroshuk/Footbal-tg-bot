@@ -11,6 +11,7 @@ export const getMatches = async (league: string, date: string = 'TODAY', status?
   const today = DateTime.now().toFormat('yyyy-LL-dd')
 
   const params: any = {
+    limit: 10,
     dateFrom: today,
     dateTo: today,
   }
@@ -29,9 +30,18 @@ export const getMatches = async (league: string, date: string = 'TODAY', status?
     params.dateTo = weekDate
   }
 
+  if (date === 'MONTH') {
+    const monthDate = DateTime.now().plus({ months: 1 }).toFormat('yyyy-LL-dd')
+
+    params.dateFrom = today
+    params.dateTo = monthDate
+  }
+
   if (status) {
     params.status = status
   }
+
+  console.log(params)
 
   try {
     const response = await axios(`${BASE_URL}competitions/${league}/matches`, {

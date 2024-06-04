@@ -5,6 +5,7 @@ export const MESSAGE_TO_DATE_MAP: { [key: string]: string; default: string } = {
   'На сегодня': 'TODAY',
   'На завтра': 'TOMORROW',
   'На неделю': 'WEEK',
+  'На месяц': 'MONTH',
   default: 'TODAY',
 }
 
@@ -12,13 +13,15 @@ export const DATE_TO_MESSAGE_MAP: { [key: string]: string; default: string } = {
   TODAY: 'На сегодня',
   TOMORROW: 'На завтра',
   WEEK: 'На неделю',
+  MONTH: 'На месяц',
   default: '',
 }
 
 export const MESSAGE_TO_LEADUE_MAP: { [key: string]: string; default: string } = {
   'Премьер Лига': 'PL',
-  'Лига чемпионов': 'CL',
+  'Лига Чемпионов': 'CL',
   БундесЛига: 'BL1',
+  'Лига Европы': 'EC',
   default: 'PL',
 }
 

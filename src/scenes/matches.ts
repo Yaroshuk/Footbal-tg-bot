@@ -18,7 +18,7 @@ matches.enter(async (ctx: Context) => {
 })
 
 // ACTIONS DATE
-matches.hears(['На сегодня', 'На завтра', 'На неделю'], steps, async (ctx) => {
+matches.hears(['На сегодня', 'На завтра', 'На неделю', 'На месяц'], steps, async (ctx) => {
   const message = ctx.message.text
 
   ctx.session.date = MESSAGE_TO_DATE_MAP[message] ?? MESSAGE_TO_DATE_MAP.default
@@ -27,7 +27,7 @@ matches.hears(['На сегодня', 'На завтра', 'На неделю'],
 })
 
 // ACTIONS MATCHES
-matches.hears(['Премьер Лига', 'Лига чемпионов', 'БундесЛига'], steps, async (ctx, next) => {
+matches.hears(['Премьер Лига', 'Лига чемпионов', 'БундесЛига', 'Лига Европы'], steps, async (ctx, next) => {
   const message = ctx.message.text
 
   const league = MESSAGE_TO_LEADUE_MAP[message] ?? MESSAGE_TO_LEADUE_MAP.default
@@ -54,11 +54,11 @@ matches.hears(['Премьер Лига', 'Лига чемпионов', 'Бун
       await ctx.replyWithMediaGroup([
         {
           type: 'photo',
-          media: String(match.homeTeam.crest).replace('.svg', '.png'),
+          media: String(match.homeTeam.crest), //.replace('.svg', '.png'),
           parse_mode: 'HTML',
           caption,
         },
-        { type: 'photo', media: String(match.awayTeam.crest).replace('.svg', '.png') },
+        { type: 'photo', media: String(match.awayTeam.crest) },
       ])
     } catch (error) {
       console.log('SVG error', error)

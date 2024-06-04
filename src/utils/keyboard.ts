@@ -13,6 +13,7 @@ export const dateKeyboard = () => {
       Markup.button.callback('На сегодня', 'date-TODAY', false),
       Markup.button.callback('На завтра', 'date-TOMORROW', false),
       Markup.button.callback('На неделю', 'date-WEEK', false),
+      Markup.button.callback('На месяц', 'date-MONTH', false),
     ],
   ]).resize()
 }
@@ -23,6 +24,7 @@ export const matchesKeyboard = () => {
       Markup.button.callback('Премьер Лига', 'match-PL', false),
       Markup.button.callback('Лига чемпионов', 'match-CL', false),
       Markup.button.callback('БундесЛига', 'match-BL1', false),
+      Markup.button.callback('Лига Европы', 'match-EC', false),
     ],
   ]).resize()
 }
@@ -33,6 +35,7 @@ export const additionalMatchesKeyboard = () => {
       Markup.button.callback('Премьер Лига', 'match-PL', false),
       Markup.button.callback('Лига чемпионов', 'match-CL', false),
       Markup.button.callback('БундесЛига', 'match-BL1', false),
+      Markup.button.callback('Лига Европы', 'match-EC', false),
     ],
     [
       Markup.button.callback('Изменить дату', 'action-RESTART', false),
