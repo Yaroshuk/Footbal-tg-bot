@@ -5,7 +5,7 @@ export const MESSAGE_TO_DATE_MAP: { [key: string]: string; default: string } = {
   'На сегодня': 'TODAY',
   'На завтра': 'TOMORROW',
   'На неделю': 'WEEK',
-  'На месяц': 'MONTH',
+  'На 2 недели': '2WEEK',
   default: 'TODAY',
 }
 
@@ -13,7 +13,7 @@ export const DATE_TO_MESSAGE_MAP: { [key: string]: string; default: string } = {
   TODAY: 'На сегодня',
   TOMORROW: 'На завтра',
   WEEK: 'На неделю',
-  MONTH: 'На месяц',
+  '2WEEK': 'На 2 недели',
   default: '',
 }
 

@@ -11,7 +11,7 @@ export const getMatches = async (league: string, date: string = 'TODAY', status?
   const today = DateTime.now().toFormat('yyyy-LL-dd')
 
   const params: any = {
-    limit: 10,
+    limit: 2,
     dateFrom: today,
     dateTo: today,
   }
@@ -30,8 +30,8 @@ export const getMatches = async (league: string, date: string = 'TODAY', status?
     params.dateTo = weekDate
   }
 
-  if (date === 'MONTH') {
-    const monthDate = DateTime.now().plus({ months: 1 }).toFormat('yyyy-LL-dd')
+  if (date === '2WEEK') {
+    const monthDate = DateTime.now().plus({ weeks: 2 }).toFormat('yyyy-LL-dd')
 
     params.dateFrom = today
     params.dateTo = monthDate

@@ -13,7 +13,7 @@ export const dateKeyboard = () => {
       Markup.button.callback('На сегодня', 'date-TODAY', false),
       Markup.button.callback('На завтра', 'date-TOMORROW', false),
       Markup.button.callback('На неделю', 'date-WEEK', false),
-      Markup.button.callback('На месяц', 'date-MONTH', false),
+      Markup.button.callback('На 2 недели', 'date-2WEEK', false),
     ],
   ]).resize()
 }

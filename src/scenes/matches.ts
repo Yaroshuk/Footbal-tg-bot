@@ -1,4 +1,5 @@
 import { Context, Scenes } from 'telegraf'
+import axios from 'axios'
 import { DateTime } from 'luxon'
 import { matchesKeyboard, dateKeyboard, additionalMatchesKeyboard } from '../utils/keyboard'
 import { IMyContext } from '../types'
@@ -10,6 +11,7 @@ import {
   MESSAGE_TO_LEADUE_MAP,
 } from '../constants/api'
 import { steps } from '../middlewares'
+import { Resvg } from '@resvg/resvg-js'
 
 const matches = new Scenes.BaseScene<IMyContext>('Matches')
 
@@ -18,7 +20,7 @@ matches.enter(async (ctx: Context) => {
 })
 
 // ACTIONS DATE
-matches.hears(['На сегодня', 'На завтра', 'На неделю', 'На месяц'], steps, async (ctx) => {
+matches.hears(['На сегодня', 'На завтра', 'На неделю', 'На 2 недели'], steps, async (ctx) => {
   const message = ctx.message.text
 
   ctx.session.date = MESSAGE_TO_DATE_MAP[message] ?? MESSAGE_TO_DATE_MAP.default
@@ -45,20 +47,64 @@ matches.hears(['Премьер Лига', 'Лига чемпионов', 'Бун
   const matches = [...result]
 
   for (const match of matches) {
-    console.log('MATCG', match)
+    // console.log('MATCG', match)
     const caption = `<b>${match.homeTeam.shortName} (дома)</b>   🆚   <b>${
       match.awayTeam.shortName
     } (в гостях)</b>\n\n${match?.date ? `⏳ ${DateTime.fromISO(match?.date).toFormat('T dd-LL-yyyy\n\n')}` : ''}`
+
+    let homeImg = match.homeTeam.crest
+    let awayImg = match.awayTeam.crest
+
+    // TODO: refactor
+    if (String(homeImg).includes('.svg')) {
+      try {
+        const response = await axios(match.homeTeam.crest, {
+          headers: {
+            'X-Auth-Token': process.env.API_TOKEN!,
+          },
+        })
+
+        if (response.status === 200) {
+          const result = response.data
+
+          console.log('rre', result)
+
+          const resvg = new Resvg(result, { fitTo: { mode: 'width', value: 200 } })
+          homeImg = { source: resvg.render().asPng() }
+        }
+      } catch (error) {
+        throw new Error(`SVG HOME Error: ${error}`)
+      }
+    }
+
+    if (String(awayImg).includes('.svg')) {
+      try {
+        const response = await axios(match.awayTeam.crest, {
+          headers: {
+            'X-Auth-Token': process.env.API_TOKEN!,
+          },
+        })
+
+        if (response.status === 200) {
+          const result = response.data
+
+          const resvg = new Resvg(result, { fitTo: { mode: 'width', value: 200 } })
+          awayImg = { source: resvg.render().asPng() }
+        }
+      } catch (error) {
+        throw new Error(`SVG AWAY Error: ${error}`)
+      }
+    }
 
     try {
       await ctx.replyWithMediaGroup([
         {
           type: 'photo',
-          media: String(match.homeTeam.crest), //.replace('.svg', '.png'),
+          media: homeImg,
           parse_mode: 'HTML',
           caption,
         },
-        { type: 'photo', media: String(match.awayTeam.crest) },
+        { type: 'photo', media: awayImg },
       ])
     } catch (error) {
       console.log('SVG error', error)
